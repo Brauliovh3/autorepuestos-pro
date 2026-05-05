@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoRepuestos Pro | Repuestos Automotrices Online</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rojo: #D62828;
+    --rojo-oscuro: #9B1B1B;
+    --negro: #0F0F0F;
+    --gris-oscuro: #1A1A1A;
+    --gris-medio: #2C2C2C;
+    --gris-claro: #F4F4F4;
+    --blanco: #FFFFFF;
+    --amarillo: #F7B731;
+    --texto-muted: #888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--negro);
+    color: var(--blanco);
+    overflow-x: hidden;
+  }
+
+  /* ===== BARRA SUPERIOR ===== */
+  .topbar {
+    background: var(--rojo);
+    padding: 8px 0;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    background: var(--negro);
+    border-bottom: 2px solid var(--rojo);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(214,40,40,0.3);
+  }
+
+  .header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .logo-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--rojo);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+
+  .logo-text span:first-child {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--blanco);
+    letter-spacing: 1px;
+  }
+
+  .logo-text span:last-child {
+    font-size: 11px;
+    color: var(--rojo);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .search-bar {
+    flex: 1;
+    display: flex;
+    background: var(--gris-medio);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #333;
+    transition: border-color 0.2s;
+  }
+
+  .search-bar:focus-within { border-color: var(--rojo); }
+
+  .search-bar input {
+    flex: 1;
+    padding: 12px 16px;
+    background: transparent;
+    border: none;
+    color: var(--blanco);
+    font-size: 14px;
+    font-family: 'Barlow', sans-serif;
+    outline: none;
+  }
+
+  .search-bar input::placeholder { color: var(--texto-muted); }
+
+  .search-bar button {
+    padding: 12px 20px;
+    background: var(--rojo);
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .search-bar button:hover { background: var(--rojo-oscuro); }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+  }
+
+  .btn-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    background: none;
+    border: none;
+    color: var(--blanco);
+    cursor: pointer;
+    font-family: 'Barlow', sans-serif;
+    font-size: 11px;
+    transition: color 0.2s;
+    text-decoration: none;
+  }
+
+  .btn-header:hover { color: var(--rojo); }
+  .btn-header .icon { font-size: 22px; }
+
+  .cart-btn {
+    position: relative;
+  }
+
+  .cart-count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: var(--amarillo);
+    color: var(--negro);
+    font-size: 10px;
+    font-weight: 700;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    background: var(--gris-oscuro);
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .nav-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    gap: 0;
+  }
+
+  .nav-link {
+    padding: 14px 18px;
+    color: #ccc;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+  }
+
+  .nav-link:hover, .nav-link.active {
+    color: var(--blanco);
+    border-bottom-color: var(--rojo);
+    background: rgba(214,40,40,0.08);
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(135deg, #0F0F0F 0%, #1a0a0a 50%, #0F0F0F 100%);
+    padding: 80px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(214,40,40,0.15) 0%, transparent 70%);
+  }
+
+  .hero-content { position: relative; max-width: 700px; margin: 0 auto; }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(214,40,40,0.15);
+    border: 1px solid rgba(214,40,40,0.4);
+    color: var(--rojo);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(42px, 7vw, 72px);
+    font-weight: 800;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 span { color: var(--rojo); }
+
+  .hero p {
+    color: #aaa;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 36px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  .btn-primary {
+    padding: 14px 32px;
+    background: var(--rojo);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: var(--rojo-oscuro); transform: translateY(-1px); }
+
+  .btn-secondary {
+    padding: 14px 32px;
+    background: transparent;
+    color: white;
+    border: 1px solid #444;
+    border-radius: 8px;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover { border-color: var(--rojo); color: var(--rojo); }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid #222;
+  }
+
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--rojo);
+    line-height: 1;
+  }
+  .stat-label { font-size: 12px; color: var(--texto-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+
+  /* ===== CATEGORÍAS ===== */
+  .section {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 60px 24px;
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .section-title span { color: var(--rojo); }
+
+  .section-sub {
+    color: var(--texto-muted);
+    font-size: 14px;
+    margin-bottom: 32px;
+  }
+
+  .cats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+  }
+
+  .cat-card {
+    background: var(--gris-oscuro);
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 24px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-decoration: none;
+    color: var(--blanco);
+  }
+
+  .cat-card:hover {
+    border-color: var(--rojo);
+    background: rgba(214,40,40,0.08);
+    transform: translateY(-3px);
+  }
+
+  .cat-icon { font-size: 36px; margin-bottom: 10px; }
+  .cat-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+  .cat-count { font-size: 12px; color: var(--texto-muted); }
+
+  /* ===== PRODUCTOS ===== */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    margin-top: 12px;
+  }
+
+  .product-card {
+    background: var(--gris-oscuro);
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.25s;
+    cursor: pointer;
+  }
+
+  .product-card:hover {
+    border-color: var(--rojo);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(214,40,40,0.15);
+  }
+
+  .product-img {
+    height: 180px;
+    background: var(--gris-medio);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+    position: relative;
+  }
+
+  .product-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--rojo);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .product-body { padding: 16px; }
+  .product-cat { font-size: 11px; color: var(--rojo); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .product-name { font-weight: 600; font-size: 15px; margin-bottom: 6px; line-height: 1.3; }
+  .product-compat { font-size: 12px; color: var(--texto-muted); margin-bottom: 12px; }
+
+  .product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #333;
+  }
+
+  .product-price { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; color: var(--amarillo); }
+  .product-price-old { font-size: 12px; color: var(--texto-muted); text-decoration: line-through; display: block; }
+
+  .btn-cart {
+    width: 38px;
+    height: 38px;
+    background: var(--rojo);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn-cart:hover { background: var(--rojo-oscuro); transform: scale(1.1); }
+
+  .btn-cart.added { background: #22c55e; }
+
+  /* ===== PAGOS ===== */
+  .pagos-section {
+    background: var(--gris-oscuro);
+    border-top: 1px solid #2a2a2a;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .pagos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 8px;
+  }
+
+  .pago-card {
+    background: var(--gris-medio);
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .pago-icon { font-size: 32px; margin-bottom: 10px; }
+  .pago-name { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+  .pago-desc { font-size: 12px; color: var(--texto-muted); }
+  .pago-free {
+    display: inline-block;
+    margin-top: 8px;
+    background: rgba(34,197,94,0.15);
+    color: #22c55e;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  /* ===== CARRITO MODAL ===== */
+  .cart-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .cart-overlay.open { opacity: 1; pointer-events: all; }
+
+  .cart-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 420px;
+    max-width: 100vw;
+    height: 100vh;
+    background: var(--gris-oscuro);
+    border-left: 1px solid #333;
+    z-index: 2001;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .cart-panel.open { transform: translateX(0); }
+
+  .cart-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cart-header h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .btn-close {
+    background: none;
+    border: none;
+    color: var(--texto-muted);
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .btn-close:hover { color: var(--rojo); }
+
+  .cart-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 24px;
+  }
+
+  .cart-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--texto-muted);
+  }
+
+  .cart-empty .icon { font-size: 48px; margin-bottom: 16px; display: block; }
+
+  .cart-item {
+    display: flex;
+    gap: 12px;
+    padding: 16px 0;
+    border-bottom: 1px solid #2a2a2a;
+    animation: slideIn 0.3s ease;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .cart-item-img {
+    width: 60px;
+    height: 60px;
+    background: var(--gris-medio);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+
+  .cart-item-info { flex: 1; }
+  .cart-item-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+  .cart-item-price { color: var(--amarillo); font-weight: 700; font-size: 15px; }
+
+  .cart-item-qty {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .qty-btn {
+    width: 26px;
+    height: 26px;
+    background: var(--gris-medio);
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+
+  .qty-btn:hover { background: var(--rojo); border-color: var(--rojo); }
+  .qty-num { font-size: 14px; font-weight: 600; min-width: 20px; text-align: center; }
+
+  .btn-remove {
+    background: none;
+    border: none;
+    color: var(--texto-muted);
+    cursor: pointer;
+    font-size: 16px;
+    transition: color 0.2s;
+    padding: 4px;
+  }
+
+  .btn-remove:hover { color: var(--rojo); }
+
+  .cart-footer {
+    padding: 20px 24px;
+    border-top: 1px solid #333;
+  }
+
+  .cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .cart-total span:first-child { color: var(--texto-muted); font-size: 14px; }
+  .cart-total-price {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--amarillo);
+  }
+
+  .btn-checkout {
+    width: 100%;
+    padding: 16px;
+    background: var(--rojo);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 10px;
+  }
+
+  .btn-checkout:hover { background: var(--rojo-oscuro); }
+
+  .payment-icons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+
+  .pay-badge {
+    background: var(--gris-medio);
+    border: 1px solid #333;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #ccc;
+  }
+
+  /* ===== MODAL PRODUCTO ===== */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal-box {
+    background: var(--gris-oscuro);
+    border: 1px solid #333;
+    border-radius: 16px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: scale(0.95);
+    transition: transform 0.3s;
+  }
+
+  .modal-overlay.open .modal-box { transform: scale(1); }
+
+  .modal-img {
+    height: 220px;
+    background: var(--gris-medio);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .modal-body { padding: 24px; }
+  .modal-cat { font-size: 12px; color: var(--rojo); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .modal-name { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+  .modal-price { font-size: 32px; font-weight: 800; color: var(--amarillo); margin-bottom: 16px; }
+  .modal-desc { color: #aaa; font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
+
+  .modal-specs {
+    background: var(--gris-medio);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+
+  .modal-specs h4 { font-size: 13px; color: var(--texto-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+
+  .spec-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid #333;
+    font-size: 13px;
+  }
+
+  .spec-row:last-child { border-bottom: none; }
+  .spec-key { color: var(--texto-muted); }
+  .spec-val { font-weight: 600; }
+
+  .modal-actions { display: flex; gap: 10px; }
+
+  .btn-add-big {
+    flex: 1;
+    padding: 14px;
+    background: var(--rojo);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Barlow', sans-serif;
+  }
+
+  .btn-add-big:hover { background: var(--rojo-oscuro); }
+
+  .btn-whatsapp {
+    padding: 14px 20px;
+    background: #25D366;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Barlow', sans-serif;
+    white-space: nowrap;
+  }
+
+  .btn-whatsapp:hover { background: #128C7E; }
+
+  /* ===== TOAST ===== */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #22c55e;
+    color: white;
+    padding: 14px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    z-index: 9999;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* ===== CHECKOUT MODAL ===== */
+  .checkout-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 4000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .checkout-overlay.open { opacity: 1; pointer-events: all; }
+
+  .checkout-box {
+    background: var(--gris-oscuro);
+    border: 1px solid #333;
+    border-radius: 16px;
+    max-width: 520px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 32px;
+    transform: scale(0.95);
+    transition: transform 0.3s;
+  }
+
+  .checkout-overlay.open .checkout-box { transform: scale(1); }
+
+  .checkout-box h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .form-group { margin-bottom: 16px; }
+
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--gris-medio);
+    border: 1px solid #333;
+    border-radius: 8px;
+    color: var(--blanco);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--rojo);
+  }
+
+  .form-group select { appearance: none; }
+
+  .pay-methods { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+
+  .pay-method {
+    border: 2px solid #333;
+    border-radius: 8px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+
+  .pay-method.selected { border-color: var(--rojo); background: rgba(214,40,40,0.1); }
+  .pay-method-icon { font-size: 24px; margin-bottom: 4px; }
+  .pay-method-name { font-size: 13px; font-weight: 600; }
+
+  .order-summary {
+    background: var(--gris-medio);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+
+  .order-summary h4 { font-size: 13px; color: var(--texto-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+
+  .order-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    padding: 4px 0;
+  }
+
+  .order-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 700;
+    padding-top: 8px;
+    margin-top: 8px;
+    border-top: 1px solid #444;
+  }
+
+  .order-total span:last-child { color: var(--amarillo); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: #0a0a0a;
+    border-top: 1px solid #1a1a1a;
+    padding: 48px 24px 24px;
+    margin-top: 60px;
+  }
+
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 32px;
+  }
+
+  .footer-brand p { color: var(--texto-muted); font-size: 13px; line-height: 1.7; margin-top: 16px; }
+
+  .footer-col h4 {
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    color: var(--rojo);
+  }
+
+  .footer-col a {
+    display: block;
+    color: var(--texto-muted);
+    text-decoration: none;
+    font-size: 13px;
+    padding: 4px 0;
+    transition: color 0.2s;
+  }
+
+  .footer-col a:hover { color: var(--blanco); }
+
+  .footer-bottom {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a1a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--texto-muted);
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* ===== FILTROS ===== */
+  .filters {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    margin-top: -8px;
+  }
+
+  .filter-btn {
+    padding: 8px 16px;
+    background: var(--gris-medio);
+    border: 1px solid #333;
+    border-radius: 20px;
+    color: #ccc;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Barlow', sans-serif;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--rojo);
+    border-color: var(--rojo);
+    color: white;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .header-inner { flex-wrap: wrap; gap: 12px; }
+    .search-bar { order: 3; flex: 0 0 100%; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+    .hero h1 { font-size: 38px; }
+    .hero-stats { gap: 20px; }
+    .pay-methods { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .footer-inner { grid-template-columns: 1fr; }
+    .cart-panel { width: 100vw; }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #111; }
+  ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--rojo); }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  🚚 Envíos a todo el Perú · Pago por Yape, Plin, Transferencia · 📞 WhatsApp: +51 987 654 321
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#" onclick="showSection('home')">
+      <div class="logo-icon">🔧</div>
+      <div class="logo-text">
+        <span>AutoRepuestos</span>
+        <span>PRO</span>
+      </div>
+    </a>
+
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Buscar repuestos, marca, modelo..." oninput="filterProducts()">
+      <button onclick="filterProducts()">🔍</button>
+    </div>
+
+    <div class="header-actions">
+      <button class="btn-header" onclick="showSection('catalogo')">
+        <span class="icon">📦</span>
+        <span>Catálogo</span>
+      </button>
+      <button class="btn-header" onclick="showSection('nosotros')">
+        <span class="icon">🏢</span>
+        <span>Empresa</span>
+      </button>
+      <button class="btn-header" onclick="showSection('contacto')">
+        <span class="icon">📞</span>
+        <span>Contacto</span>
+      </button>
+      <button class="btn-header" onclick="showSection('login')">
+        <span class="icon">👤</span>
+        <span>Mi cuenta</span>
+      </button>
+      <button class="btn-header cart-btn" onclick="toggleCart()">
+        <span class="icon">🛒</span>
+        <span>Carrito</span>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-link active" onclick="filterCat('todos')">Todos los productos</a>
+    <a class="nav-link" onclick="filterCat('motor')">🔧 Motor</a>
+    <a class="nav-link" onclick="filterCat('frenos')">🛑 Frenos</a>
+    <a class="nav-link" onclick="filterCat('suspension')">🎛️ Suspensión</a>
+    <a class="nav-link" onclick="filterCat('electrico')">🔌 Eléctrico</a>
+    <a class="nav-link" onclick="filterCat('transmision')">⚙️ Transmisión</a>
+    <a class="nav-link" onclick="filterCat('herramientas')">🔨 Herramientas</a>
+  </div>
+</nav>
+
+<!-- SECCIÓN HOME -->
+<div id="section-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">⚡ Tu tienda de repuestos online</div>
+      <h1>Repuestos<br><span>Automotrices</span><br>Online</h1>
+      <p>Encuentra los mejores repuestos para tu vehículo. Calidad garantizada, envíos a todo el Perú y pagos sin comisiones.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showSection('catalogo')">Ver catálogo</button>
+        <button class="btn-secondary" onclick="showSection('nosotros')">Sobre nosotros</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Productos</div></div>
+        <div class="stat"><div class="stat-num">6</div><div class="stat-label">Categorías</div></div>
+        <div class="stat"><div class="stat-num">0%</div><div class="stat-label">Comisiones</div></div>
+        <div class="stat"><div class="stat-num">24h</div><div class="stat-label">Envío</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORÍAS -->
+  <div class="section">
+    <div class="section-title">Nuestras <span>Categorías</span></div>
+    <div class="section-sub">Encuentra exactamente lo que necesitas para tu vehículo</div>
+    <div class="cats-grid">
+      <a class="cat-card" onclick="filterCat('motor')">
+        <div class="cat-icon">🔧</div>
+        <div class="cat-name">Motor y Componentes</div>
+        <div class="cat-count">12 productos</div>
+      </a>
+      <a class="cat-card" onclick="filterCat('frenos')">
+        <div class="cat-icon">🛑</div>
+        <div class="cat-name">Sistema de Frenos</div>
+        <div class="cat-count">8 productos</div>
+      </a>
+      <a class="cat-card" onclick="filterCat('suspension')">
+        <div class="cat-icon">🎛️</div>
+        <div class="cat-name">Suspensión y Dirección</div>
+        <div class="cat-count">10 productos</div>
+      </a>
+      <a class="cat-card" onclick="filterCat('electrico')">
+        <div class="cat-icon">🔌</div>
+        <div class="cat-name">Sistema Eléctrico</div>
+        <div class="cat-count">9 productos</div>
+      </a>
+      <a class="cat-card" onclick="filterCat('transmision')">
+        <div class="cat-icon">⚙️</div>
+        <div class="cat-name">Transmisión</div>
+        <div class="cat-count">7 productos</div>
+      </a>
+      <a class="cat-card" onclick="filterCat('herramientas')">
+        <div class="cat-icon">🔨</div>
+        <div class="cat-name">Herramientas</div>
+        <div class="cat-count">6 productos</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- PRODUCTOS DESTACADOS -->
+  <div class="section" style="padding-top:0">
+    <div class="section-title">Productos <span>Destacados</span></div>
+    <div class="section-sub">Los más vendidos esta semana</div>
+    <div class="products-grid" id="featuredGrid"></div>
+  </div>
+
+  <!-- MÉTODOS DE PAGO -->
+  <div class="pagos-section">
+    <div class="section">
+      <div class="section-title">Métodos de <span>Pago</span></div>
+      <div class="section-sub">Paga como prefieras, sin comisiones adicionales</div>
+      <div class="pagos-grid">
+        <div class="pago-card">
+          <div class="pago-icon">🏦</div>
+          <div class="pago-name">Transferencia Bancaria</div>
+          <div class="pago-desc">BCP · Interbank · BBVA · BN<br>Confirmación en 15-30 min</div>
+          <span class="pago-free">0% comisión</span>
+        </div>
+        <div class="pago-card">
+          <div class="pago-icon">📱</div>
+          <div class="pago-name">Yape</div>
+          <div class="pago-desc">Pago instantáneo con QR<br>Solo necesitas tu celular</div>
+          <span class="pago-free">0% comisión</span>
+        </div>
+        <div class="pago-card">
+          <div class="pago-icon">💳</div>
+          <div class="pago-name">Plin</div>
+          <div class="pago-desc">Transferencia rápida sin costo<br>Interbank y socios</div>
+          <span class="pago-free">0% comisión</span>
+        </div>
+        <div class="pago-card">
+          <div class="pago-icon">🚚</div>
+          <div class="pago-name">Contra Entrega</div>
+          <div class="pago-desc">Solo Lima Metropolitana<br>Paga al recibir tu pedido</div>
+          <span class="pago-free" style="background:rgba(247,183,49,0.15);color:var(--amarillo)">Solo S/5</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- SECCIÓN CATÁLOGO -->
+<div id="section-catalogo" style="display:none">
+  <div class="section">
+    <div class="section-title">Catálogo de <span>Productos</span></div>
+    <div class="section-sub">Más de 50 productos disponibles para tu vehículo</div>
+    <div class="filters" id="filtersBar">
+      <button class="filter-btn active" onclick="filterCatPage('todos', this)">Todos</button>
+      <button class="filter-btn" onclick="filterCatPage('motor', this)">🔧 Motor</button>
+      <button class="filter-btn" onclick="filterCatPage('frenos', this)">🛑 Frenos</button>
+      <button class="filter-btn" onclick="filterCatPage('suspension', this)">🎛️ Suspensión</button>
+      <button class="filter-btn" onclick="filterCatPage('electrico', this)">🔌 Eléctrico</button>
+      <button class="filter-btn" onclick="filterCatPage('transmision', this)">⚙️ Transmisión</button>
+      <button class="filter-btn" onclick="filterCatPage('herramientas', this)">🔨 Herramientas</button>
+    </div>
+    <div class="products-grid" id="catalogGrid"></div>
+  </div>
+</div>
+
+<!-- SECCIÓN NOSOTROS -->
+<div id="section-nosotros" style="display:none">
+  <div class="section" style="max-width:800px">
+    <div class="section-title">Sobre <span>Nosotros</span></div>
+    <div style="margin-top:32px; color:#ccc; line-height:1.8; font-size:15px;">
+      <p style="margin-bottom:20px"><strong style="color:white">AutoRepuestos Pro</strong> es una empresa dedicada a la venta de repuestos y accesorios automotrices, enfocada en atender las necesidades de talleres mecánicos y vehículos particulares en todo el Perú.</p>
+      <p style="margin-bottom:20px">Ante el creciente interés por las compras en línea, hemos expandido nuestro alcance a través de esta plataforma de e-commerce, facilitando la adquisición de productos para nuestros clientes de manera cómoda y accesible.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:32px;">
+        <div style="background:var(--gris-oscuro);border:1px solid #2a2a2a;border-radius:12px;padding:24px;text-align:center">
+          <div style="font-size:36px;margin-bottom:8px">🎯</div>
+          <div style="font-weight:700;margin-bottom:6px">Misión</div>
+          <div style="font-size:13px;color:var(--texto-muted)">Proveer repuestos de calidad a precios justos</div>
+        </div>
+        <div style="background:var(--gris-oscuro);border:1px solid #2a2a2a;border-radius:12px;padding:24px;text-align:center">
+          <div style="font-size:36px;margin-bottom:8px">🔭</div>
+          <div style="font-weight:700;margin-bottom:6px">Visión</div>
+          <div style="font-size:13px;color:var(--texto-muted)">Ser el e-commerce #1 de repuestos en Perú</div>
+        </div>
+        <div style="background:var(--gris-oscuro);border:1px solid #2a2a2a;border-radius:12px;padding:24px;text-align:center">
+          <div style="font-size:36px;margin-bottom:8px">💎</div>
+          <div style="font-weight:700;margin-bottom:6px">Valores</div>
+          <div style="font-size:13px;color:var(--texto-muted)">Calidad, honestidad y compromiso</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN CONTACTO -->
+<div id="section-contacto" style="display:none">
+  <div class="section" style="max-width:700px">
+    <div class="section-title">Contáct<span>anos</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:32px;margin-bottom:32px">
+      <div style="background:var(--gris-oscuro);border:1px solid #2a2a2a;border-radius:12px;padding:20px;text-align:center">
+        <div style="font-size:28px;margin-bottom:8px">📱</div>
+        <div style="font-weight:700;margin-bottom:4px">WhatsApp</div>
+        <div style="color:var(--texto-muted);font-size:13px">+51 987 654 321</div>
+      </div>
+      <div style="background:var(--gris-oscuro);border:1px solid #2a2a2a;border-radius:12px;padding:20px;text-align:center">
+        <div style="font-size:28px;margin-bottom:8px">📧</div>
+        <div style="font-weight:700;margin-bottom:4px">Email</div>
+        <div style="color:var(--texto-muted);font-size:13px">ventas@autorepuestospro.pe</div>
+      </div>
+      <div style="background:var(--gris-oscuro);border:1px solid #2a2a2a;border-radius:12px;padding:20px;text-align:center">
+        <div style="font-size:28px;margin-bottom:8px">📍</div>
+        <div style="font-weight:700;margin-bottom:4px">Dirección</div>
+        <div style="color:var(--texto-muted);font-size:13px">Av. Principal 123, Abancay</div>
+      </div>
+      <div style="background:var(--gris-oscuro);border:1px solid #2a2a2a;border-radius:12px;padding:20px;text-align:center">
+        <div style="font-size:28px;margin-bottom:8px">⏰</div>
+        <div style="font-weight:700;margin-bottom:4px">Horario</div>
+        <div style="color:var(--texto-muted);font-size:13px">Lun–Sáb: 8am–6pm</div>
+      </div>
+    </div>
+    <div style="background:var(--gris-oscuro);border:1px solid #2a2a2a;border-radius:12px;padding:24px">
+      <h3 style="margin-bottom:20px;font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700">Envíanos un mensaje</h3>
+      <div class="form-group"><label>Nombre</label><input type="text" placeholder="Tu nombre completo"></div>
+      <div class="form-group"><label>Email</label><input type="email" placeholder="tu@email.com"></div>
+      <div class="form-group"><label>Mensaje</label><textarea rows="4" placeholder="¿En qué podemos ayudarte?"></textarea></div>
+      <button class="btn-primary" style="width:100%" onclick="alert('¡Mensaje enviado! Nos contactaremos pronto.')">Enviar mensaje</button>
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN LOGIN -->
+<div id="section-login" style="display:none">
+  <div class="section" style="max-width:420px">
+    <div id="loginForm">
+      <div class="section-title">Mi <span>Cuenta</span></div>
+      <div style="background:var(--gris-oscuro);border:1px solid #2a2a2a;border-radius:12px;padding:24px;margin-top:24px">
+        <div class="form-group"><label>Email</label><input type="email" placeholder="tu@email.com"></div>
+        <div class="form-group"><label>Contraseña</label><input type="password" placeholder="••••••••"></div>
+        <button class="btn-primary" style="width:100%;margin-bottom:12px" onclick="alert('¡Bienvenido!')">Iniciar sesión</button>
+        <button class="btn-secondary" style="width:100%" onclick="document.getElementById('loginForm').style.display='none';document.getElementById('registerForm').style.display='block'">¿No tienes cuenta? Regístrate</button>
+      </div>
+    </div>
+    <div id="registerForm" style="display:none">
+      <div class="section-title">Crear <span>Cuenta</span></div>
+      <div style="background:var(--gris-oscuro);border:1px solid #2a2a2a;border-radius:12px;padding:24px;margin-top:24px">
+        <div class="form-group"><label>Nombre completo</label><input type="text" placeholder="Tu nombre"></div>
+        <div class="form-group"><label>Email</label><input type="email" placeholder="tu@email.com"></div>
+        <div class="form-group"><label>Teléfono</label><input type="tel" placeholder="+51 987 654 321"></div>
+        <div class="form-group"><label>Contraseña</label><input type="password" placeholder="Mínimo 8 caracteres"></div>
+        <button class="btn-primary" style="width:100%;margin-bottom:12px" onclick="alert('¡Cuenta creada exitosamente!')">Registrarse</button>
+        <button class="btn-secondary" style="width:100%" onclick="document.getElementById('registerForm').style.display='none';document.getElementById('loginForm').style.display='block'">Ya tengo cuenta</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo">
+        <div class="logo-icon">🔧</div>
+        <div class="logo-text">
+          <span>AutoRepuestos</span>
+          <span>PRO</span>
+        </div>
+      </div>
+      <p>Tu tienda de repuestos automotrices online. Calidad garantizada y envíos a todo el Perú. Sin comisiones en tus pagos.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Categorías</h4>
+      <a onclick="filterCat('motor')">Motor y Componentes</a>
+      <a onclick="filterCat('frenos')">Sistema de Frenos</a>
+      <a onclick="filterCat('suspension')">Suspensión</a>
+      <a onclick="filterCat('electrico')">Sistema Eléctrico</a>
+      <a onclick="filterCat('transmision')">Transmisión</a>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <a onclick="showSection('nosotros')">Sobre nosotros</a>
+      <a onclick="showSection('contacto')">Contacto</a>
+      <a onclick="showSection('login')">Mi cuenta</a>
+      <a href="#">Políticas de envío</a>
+      <a href="#">Garantías</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <a href="#">📱 +51 987 654 321</a>
+      <a href="#">📧 ventas@autorepuestospro.pe</a>
+      <a href="#">📍 Abancay, Apurímac</a>
+      <a href="#">⏰ Lun–Sáb: 8am–6pm</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 AutoRepuestos Pro · CFP Abancay - SENATI</span>
+    <span>Hecho con ❤️ para el curso de Marketing Digital & E-Commerce</span>
+  </div>
+</footer>
+
+<!-- CARRITO PANEL -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h3>🛒 Mi Carrito</h3>
+    <button class="btn-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <span class="icon">🛒</span>
+      <p>Tu carrito está vacío</p>
+      <p style="font-size:13px;color:#666;margin-top:8px">Agrega productos para continuar</p>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total">
+      <span>Total a pagar</span>
+      <span class="cart-total-price" id="cartTotal">S/0.00</span>
+    </div>
+    <button class="btn-checkout" onclick="openCheckout()">Proceder al pago →</button>
+    <div class="payment-icons">
+      <span class="pay-badge">🏦 Transferencia</span>
+      <span class="pay-badge">📱 Yape</span>
+      <span class="pay-badge">💳 Plin</span>
+      <span class="pay-badge">🚚 Contra entrega</span>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PRODUCTO -->
+<div class="modal-overlay" id="productModal" onclick="closeModal(event)">
+  <div class="modal-box" id="modalBox"></div>
+</div>
+
+<!-- MODAL CHECKOUT -->
+<div class="checkout-overlay" id="checkoutOverlay" onclick="closeCheckout(event)">
+  <div class="checkout-box" id="checkoutBox">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+      <h2>Finalizar Pedido</h2>
+      <button class="btn-close" onclick="closeCheckoutDirect()">✕</button>
+    </div>
+    <div class="form-group"><label>Nombre completo</label><input type="text" id="checkName" placeholder="Tu nombre completo"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="form-group"><label>Teléfono / WhatsApp</label><input type="tel" id="checkPhone" placeholder="+51 987 654 321"></div>
+      <div class="form-group"><label>Email</label><input type="email" id="checkEmail" placeholder="tu@email.com"></div>
+    </div>
+    <div class="form-group"><label>Dirección de entrega</label><input type="text" id="checkAddr" placeholder="Calle, número, distrito, ciudad"></div>
+    <div class="form-group">
+      <label>Departamento</label>
+      <select id="checkDept">
+        <option>Apurímac - Abancay</option>
+        <option>Lima</option>
+        <option>Cusco</option>
+        <option>Arequipa</option>
+        <option>Otro departamento</option>
+      </select>
+    </div>
+    <div style="margin-bottom:16px">
+      <label style="display:block;font-size:13px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Método de pago</label>
+      <div class="pay-methods">
+        <div class="pay-method selected" onclick="selectPay(this,'transferencia')"><div class="pay-method-icon">🏦</div><div class="pay-method-name">Transferencia</div></div>
+        <div class="pay-method" onclick="selectPay(this,'yape')"><div class="pay-method-icon">📱</div><div class="pay-method-name">Yape</div></div>
+        <div class="pay-method" onclick="selectPay(this,'plin')"><div class="pay-method-icon">💳</div><div class="pay-method-name">Plin</div></div>
+        <div class="pay-method" onclick="selectPay(this,'contraentrega')"><div class="pay-method-icon">🚚</div><div class="pay-method-name">Contra entrega</div></div>
+      </div>
+    </div>
+    <div class="order-summary">
+      <h4>Resumen del pedido</h4>
+      <div id="orderItems"></div>
+      <div class="order-total"><span>Total</span><span id="orderTotal">S/0.00</span></div>
+    </div>
+    <button class="btn-primary" style="width:100%;font-size:16px;padding:16px" onclick="placeOrder()">✅ Confirmar Pedido</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✓ Producto agregado al carrito</div>
+
+<script>
+// ===== PRODUCTOS =====
+const products = [
+  { id:1, name:'Filtro de Aceite Bosch 3330', cat:'motor', price:45.90, oldPrice:55.00, icon:'🔧', compat:'Toyota, Kia, Hyundai', badge:'Más vendido', desc:'Filtro de aceite de alta calidad para motores de hasta 2.0L. Compatible con múltiples marcas asiáticas.', specs:{Marca:'Bosch',Modelo:'3330',Tipo:'Filtro de aceite',Peso:'0.3 kg',Garantía:'6 meses'} },
+  { id:2, name:'Pastillas de Freno Cerámicas', cat:'frenos', price:125.90, oldPrice:150.00, icon:'🛑', compat:'Nissan Frontier, Patrol', badge:'Oferta', desc:'Pastillas de freno de material cerámico de alta durabilidad. Reducen el polvo y el ruido durante el frenado.', specs:{Marca:'TRW',Tipo:'Cerámicas',Posición:'Delantera',Garantía:'12 meses',Origen:'Importado'} },
+  { id:3, name:'Batería 12V 60Ah Yuasa', cat:'electrico', price:289.90, oldPrice:320.00, icon:'🔋', compat:'Autos y camionetas 1.6-2.5L', badge:'Premium', desc:'Batería de alta potencia con tecnología libre de mantenimiento. Arranque confiable en cualquier clima.', specs:{Marca:'Yuasa',Voltaje:'12V',Capacidad:'60Ah',Polaridad:'Izquierda',Garantía:'18 meses'} },
+  { id:4, name:'Amortiguadores Delanteros KYB', cat:'suspension', price:189.90, oldPrice:220.00, icon:'⬆️', compat:'Toyota Hilux 2015-2022', badge:'Nuevo', desc:'Amortiguadores de gas de alto rendimiento para terrenos irregulares. Par delantero incluye dos unidades.', specs:{Marca:'KYB',Tipo:'Gas',Posición:'Delantero',Pack:'2 unidades',Garantía:'12 meses'} },
+  { id:5, name:'Correa de Distribución Gates', cat:'motor', price:95.00, oldPrice:110.00, icon:'⚙️', compat:'Chevrolet Spark, Aveo', badge:null, desc:'Correa de distribución de alta resistencia con material reforzado. Larga vida útil y instalación sencilla.', specs:{Marca:'Gates',Material:'HNBR',Dientes:'122',Ancho:'25mm',Garantía:'24 meses'} },
+  { id:6, name:'Kit de Embrague Completo', cat:'transmision', price:450.00, oldPrice:520.00, icon:'🔩', compat:'Hyundai Accent, i10, i20', badge:'Kit completo', desc:'Kit completo de embrague incluye disco, plato de presión y cojinete de empuje. Todo lo necesario para el cambio.', specs:{Marca:'Valeo',Diámetro:'215mm',Incluye:'Disco + Plato + Cojinete',Garantía:'12 meses',Origen:'Francia'} },
+  { id:7, name:'Sensor de Oxígeno Bosch', cat:'electrico', price:85.00, oldPrice:100.00, icon:'📡', compat:'Varios modelos universales', badge:null, desc:'Sensor lambda de banda estrecha para control de mezcla aire/combustible. Mejora el rendimiento y reduce emisiones.', specs:{Marca:'Bosch',Tipo:'Banda estrecha',Conector:'4 pines',Longitud:'60cm',Garantía:'12 meses'} },
+  { id:8, name:'Disco de Freno Ventilado', cat:'frenos', price:165.00, oldPrice:190.00, icon:'🔵', compat:'Ford Ranger 4x4 2018-2023', badge:'Oferta', desc:'Disco de freno ventilado de alta disipación de calor. Mejora el poder de frenado y reduce el fade en uso intensivo.', specs:{Marca:'Brembo',Diámetro:'280mm',Tipo:'Ventilado',Espesor:'28mm',Garantía:'12 meses'} },
+  { id:9, name:'Juego de Bujías NGK (4 pcs)', cat:'motor', price:65.00, oldPrice:80.00, icon:'⚡', compat:'Motores 1.3 - 1.8L gasolina', badge:null, desc:'Bujías de iridio de alto rendimiento para mejor encendido y mayor duración. Pack de 4 unidades.', specs:{Marca:'NGK',Tipo:'Iridio',Gap:'1.1mm',Pack:'4 unidades',Garantía:'12 meses'} },
+  { id:10, name:'Llave de Torque 20-210 Nm', cat:'herramientas', price:145.00, oldPrice:170.00, icon:'🔧', compat:'Uso universal en taller', badge:'Recomendado', desc:'Llave de torque de alta precisión con escala doble. Incluye estuche para almacenamiento y extensiones.', specs:{Marca:'Gedore',Rango:'20-210 Nm',Precisión:'±4%',Incluye:'Estuche + extensiones',Garantía:'24 meses'} },
+  { id:11, name:'Filtro de Aire Sport Racing', cat:'motor', price:55.00, oldPrice:68.00, icon:'🌀', compat:'Universal admisión 70-80mm', badge:null, desc:'Filtro de aire de alto flujo para mayor rendimiento. Lavable y reutilizable, diseño cónico universal.', specs:{Marca:'K&N',Tipo:'Cónico alto flujo',Diámetro:'80mm',Lavable:'Sí',Garantía:'Lifetime'} },
+  { id:12, name:'Terminal de Dirección Izq.', cat:'suspension', price:78.00, oldPrice:92.00, icon:'🎛️', compat:'Nissan Sentra 2013-2019', badge:null, desc:'Terminal de dirección de precisión con pin y bola de acero endurecido. Instalación directa sin modificaciones.', specs:{Marca:'Moog',Posición:'Izquierda',Material:'Acero endurecido',Incluye:'Tuerca y pasador',Garantía:'12 meses'} },
+];
+
+let cart = [];
+let selectedPayMethod = 'transferencia';
+
+// ===== RENDER PRODUCTOS =====
+function renderProducts(list, containerId) {
+  const container = document.getElementById(containerId);
+  if (!list.length) {
+    container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:#666"><div style="font-size:48px;margin-bottom:16px">🔍</div><p>No se encontraron productos</p></div>';
+    return;
+  }
+  container.innerHTML = list.map(p => `
+    <div class="product-card" onclick="openProduct(${p.id})">
+      <div class="product-img">
+        ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
+        ${p.icon}
+      </div>
+      <div class="product-body">
+        <div class="product-cat">${getCatName(p.cat)}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-compat">🚗 ${p.compat}</div>
+        <div class="product-footer">
+          <div>
+            <span class="product-price-old">S/${p.oldPrice.toFixed(2)}</span>
+            <span class="product-price">S/${p.price.toFixed(2)}</span>
+          </div>
+          <button class="btn-cart" id="cartBtn-${p.id}" onclick="event.stopPropagation();addToCart(${p.id})">+</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function getCatName(cat) {
+  const names = {motor:'Motor',frenos:'Frenos',suspension:'Suspensión',electrico:'Eléctrico',transmision:'Transmisión',herramientas:'Herramientas'};
+  return names[cat] || cat;
+}
+
+// Renderizar al cargar
+renderProducts(products.slice(0,8), 'featuredGrid');
+renderProducts(products, 'catalogGrid');
+
+// ===== SECCIONES =====
+function showSection(name) {
+  ['home','catalogo','nosotros','contacto','login'].forEach(s => {
+    document.getElementById('section-'+s).style.display = s === name ? 'block' : 'none';
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ===== FILTROS =====
+function filterCat(cat) {
+  showSection('catalogo');
+  const filtered = cat === 'todos' ? products : products.filter(p => p.cat === cat);
+  renderProducts(filtered, 'catalogGrid');
+  document.querySelectorAll('#filtersBar .filter-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.toLowerCase().includes(cat) || (cat === 'todos' && btn.textContent === 'Todos'));
+  });
+}
+
+function filterCatPage(cat, btn) {
+  document.querySelectorAll('#filtersBar .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const filtered = cat === 'todos' ? products : products.filter(p => p.cat === cat);
+  renderProducts(filtered, 'catalogGrid');
+}
+
+function filterProducts() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  if (!q) { renderProducts(products, 'catalogGrid'); return; }
+  const filtered = products.filter(p => p.name.toLowerCase().includes(q) || p.compat.toLowerCase().includes(q) || getCatName(p.cat).toLowerCase().includes(q));
+  showSection('catalogo');
+  renderProducts(filtered, 'catalogGrid');
+}
+
+// ===== CARRITO =====
+function addToCart(id) {
+  const product = products.find(p => p.id === id);
+  const existing = cart.find(i => i.id === id);
+  if (existing) { existing.qty++; }
+  else { cart.push({...product, qty:1}); }
+  updateCart();
+  showToast(`✓ ${product.name} agregado`);
+  const btn = document.getElementById('cartBtn-'+id);
+  if (btn) { btn.classList.add('added'); btn.textContent = '✓'; setTimeout(() => { btn.classList.remove('added'); btn.textContent = '+'; }, 1500); }
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(i => i.id !== id);
+  updateCart();
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) removeFromCart(id);
+  else updateCart();
+}
+
+function updateCart() {
+  const count = cart.reduce((s,i) => s + i.qty, 0);
+  const total = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  document.getElementById('cartCount').textContent = count;
+  document.getElementById('cartTotal').textContent = 'S/' + total.toFixed(2);
+  const itemsEl = document.getElementById('cartItems');
+  const footerEl = document.getElementById('cartFooter');
+  if (!cart.length) {
+    itemsEl.innerHTML = '<div class="cart-empty"><span class="icon">🛒</span><p>Tu carrito está vacío</p></div>';
+    footerEl.style.display = 'none';
+  } else {
+    footerEl.style.display = 'block';
+    itemsEl.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <div class="cart-item-img">${item.icon}</div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-price">S/${item.price.toFixed(2)}</div>
+          <div class="cart-item-qty">
+            <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+            <span class="qty-num">${item.qty}</span>
+            <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+          </div>
+        </div>
+        <button class="btn-remove" onclick="removeFromCart(${item.id})">🗑️</button>
+      </div>
+    `).join('');
+  }
+}
+
+function toggleCart() {
+  document.getElementById('cartOverlay').classList.toggle('open');
+  document.getElementById('cartPanel').classList.toggle('open');
+}
+
+// ===== MODAL PRODUCTO =====
+function openProduct(id) {
+  const p = products.find(x => x.id === id);
+  const modal = document.getElementById('modalBox');
+  modal.innerHTML = `
+    <div style="position:relative">
+      <button class="btn-close" style="position:absolute;top:16px;right:16px;z-index:1;background:rgba(0,0,0,0.5);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center" onclick="document.getElementById('productModal').classList.remove('open')">✕</button>
+      <div class="modal-img">${p.icon}</div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-cat">${getCatName(p.cat)}</div>
+      <div class="modal-name">${p.name}</div>
+      <div class="modal-price">S/${p.price.toFixed(2)} <span style="font-size:16px;color:var(--texto-muted);text-decoration:line-through">S/${p.oldPrice.toFixed(2)}</span></div>
+      <div class="modal-desc">${p.desc}</div>
+      <div class="modal-specs">
+        <h4>Especificaciones</h4>
+        ${Object.entries(p.specs).map(([k,v]) => `<div class="spec-row"><span class="spec-key">${k}</span><span class="spec-val">${v}</span></div>`).join('')}
+      </div>
+      <div style="font-size:13px;color:#aaa;margin-bottom:16px">🚗 Compatible con: ${p.compat}</div>
+      <div class="modal-actions">
+        <button class="btn-add-big" onclick="addToCart(${p.id});document.getElementById('productModal').classList.remove('open')">🛒 Agregar al carrito</button>
+        <button class="btn-whatsapp" onclick="window.open('https://wa.me/51987654321?text=Hola,%20me%20interesa:%20${encodeURIComponent(p.name)}')">WhatsApp</button>
+      </div>
+    </div>
+  `;
+  document.getElementById('productModal').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('productModal')) {
+    document.getElementById('productModal').classList.remove('open');
+  }
+}
+
+// ===== CHECKOUT =====
+function openCheckout() {
+  if (!cart.length) return;
+  toggleCart();
+  const total = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  document.getElementById('orderItems').innerHTML = cart.map(i => `
+    <div class="order-row"><span>${i.name} x${i.qty}</span><span>S/${(i.price*i.qty).toFixed(2)}</span></div>
+  `).join('');
+  document.getElementById('orderTotal').textContent = 'S/' + total.toFixed(2);
+  document.getElementById('checkoutOverlay').classList.add('open');
+}
+
+function closeCheckout(e) {
+  if (e.target === document.getElementById('checkoutOverlay')) closeCheckoutDirect();
+}
+
+function closeCheckoutDirect() {
+  document.getElementById('checkoutOverlay').classList.remove('open');
+}
+
+function selectPay(el, method) {
+  document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedPayMethod = method;
+}
+
+function placeOrder() {
+  const name = document.getElementById('checkName').value;
+  const phone = document.getElementById('checkPhone').value;
+  if (!name || !phone) { alert('Por favor completa tu nombre y teléfono'); return; }
+  const total = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  const payNames = {transferencia:'Transferencia Bancaria',yape:'Yape',plin:'Plin',contraentrega:'Contra Entrega'};
+  closeCheckoutDirect();
+  cart = [];
+  updateCart();
+  setTimeout(() => {
+    alert(`✅ ¡Pedido confirmado!\n\n👤 ${name}\n💰 Total: S/${total.toFixed(2)}\n💳 Pago: ${payNames[selectedPayMethod]}\n\nEn breve te contactaremos al ${phone} para coordinar la entrega. ¡Gracias por tu compra!`);
+  }, 300);
+}
+
+// ===== TOAST =====
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>
