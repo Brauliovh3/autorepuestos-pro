@@ -1,0 +1,9 @@
+# Archivos a ignorar en Vercel
+node_modules/
+.git/
+.gitignore
+README.md
+package-lock.json
+.env*
+.DS_Store
+Thumbs.db
