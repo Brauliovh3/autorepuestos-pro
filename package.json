@@ -1,0 +1,28 @@
+{
+  "name": "repuestos-elva",
+  "version": "1.0.0",
+  "description": "Tienda online de repuestos automotrices - Repuestos Elva",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python -m http.server 3000",
+    "build": "echo 'Build completed - Static site ready for deployment'",
+    "start": "python -m http.server 3000",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "repuestos",
+    "automotriz",
+    "peru",
+    "ecommerce",
+    "tienda-online"
+  ],
+  "author": "Repuestos Elva",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/repuestos-elva/website"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
