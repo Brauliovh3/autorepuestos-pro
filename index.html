@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Repuestos Elva</title>
+<link rel="icon" type="image/jfif" href="favicon.jfif">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -25,6 +26,34 @@
     background: var(--negro);
     color: var(--blanco);
     overflow-x: hidden;
+  }
+
+  /* Secciones específicas con fondo blanco */
+  #section-catalogo {
+    background: var(--blanco) !important;
+    color: var(--negro);
+  }
+
+  #section-catalogo .section-title,
+  #section-catalogo .section-sub {
+    color: var(--negro);
+  }
+
+  #section-catalogo .section-title span {
+    color: var(--rojo);
+  }
+
+  #section-catalogo .filter-btn {
+    background: var(--gris-claro);
+    color: var(--negro);
+    border-color: #ddd;
+  }
+
+  #section-catalogo .filter-btn:hover,
+  #section-catalogo .filter-btn.active {
+    background: var(--rojo);
+    color: white;
+    border-color: var(--rojo);
   }
 
   /* ===== BARRA SUPERIOR ===== */
@@ -67,12 +96,28 @@
   .logo-icon {
     width: 44px;
     height: 44px;
-    background: var(--rojo);
+    background: linear-gradient(135deg, var(--rojo), #ff6b6b);
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 22px;
+    box-shadow: 0 4px 15px rgba(214,40,40,0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .logo-icon::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+  }
+
+  .logo:hover .logo-icon::before {
+    transform: translateX(100%);
   }
 
   .logo-text {
@@ -214,116 +259,224 @@
 
   /* ===== HERO ===== */
   .hero {
-    background: linear-gradient(135deg, #0F0F0F 0%, #1a0a0a 50%, #0F0F0F 100%);
-    padding: 80px 24px;
+    background: 
+      linear-gradient(135deg, rgba(15,15,15,0.65) 0%, rgba(26,10,10,0.70) 50%, rgba(15,15,15,0.65) 100%),
+      url('cover.jfif');
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    padding: 120px 24px 100px;
     text-align: center;
     position: relative;
     overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .hero::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at 50% 50%, rgba(214,40,40,0.15) 0%, transparent 70%);
+    background: radial-gradient(ellipse at 50% 50%, rgba(214,40,40,0.30) 0%, transparent 70%);
+    animation: pulse 4s infinite;
   }
 
-  .hero-content { position: relative; max-width: 700px; margin: 0 auto; }
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(214,40,40,0.15)" stroke-width="0.8"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.4;
+  }
+
+  .hero-content {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    z-index: 2;
+  }
 
   .hero-badge {
     display: inline-block;
-    background: rgba(214,40,40,0.15);
-    border: 1px solid rgba(214,40,40,0.4);
+    background: linear-gradient(135deg, rgba(214,40,40,0.25), rgba(214,40,40,0.15));
+    border: 2px solid rgba(214,40,40,0.5);
     color: var(--rojo);
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
+    padding: 8px 24px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(214,40,40,0.2);
   }
 
   .hero h1 {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(42px, 7vw, 72px);
-    font-weight: 800;
-    line-height: 1;
+    font-size: clamp(48px, 8vw, 88px);
+    font-weight: 900;
+    line-height: 0.9;
     text-transform: uppercase;
-    letter-spacing: -1px;
-    margin-bottom: 16px;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.5);
   }
 
-  .hero h1 span { color: var(--rojo); }
+  .hero h1 span {
+    background: linear-gradient(45deg, var(--rojo), #ff6b6b, var(--rojo));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: glow 3s infinite;
+    position: relative;
+  }
 
   .hero p {
-    color: #aaa;
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 36px;
-    max-width: 500px;
+    color: #f0f0f0;
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+    max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    font-weight: 500;
   }
 
-  .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+  }
 
   .btn-primary {
-    padding: 14px 32px;
-    background: var(--rojo);
+    padding: 16px 40px;
+    background: linear-gradient(135deg, var(--rojo), var(--rojo-oscuro));
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     font-family: 'Barlow', sans-serif;
-    font-weight: 600;
-    font-size: 15px;
+    font-weight: 700;
+    font-size: 16px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s;
     text-decoration: none;
     display: inline-block;
+    box-shadow: 0 8px 25px rgba(214,40,40,0.4);
+    position: relative;
+    overflow: hidden;
   }
 
-  .btn-primary:hover { background: var(--rojo-oscuro); transform: translateY(-1px); }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.6s;
+  }
+
+  .btn-primary:hover::before {
+    left: 100%;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(214,40,40,0.5);
+  }
 
   .btn-secondary {
-    padding: 14px 32px;
-    background: transparent;
+    padding: 16px 40px;
+    background: rgba(255,255,255,0.1);
     color: white;
-    border: 1px solid #444;
-    border-radius: 8px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 12px;
     font-family: 'Barlow', sans-serif;
-    font-weight: 600;
-    font-size: 15px;
+    font-weight: 700;
+    font-size: 16px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s;
+    backdrop-filter: blur(10px);
   }
 
-  .btn-secondary:hover { border-color: var(--rojo); color: var(--rojo); }
+  .btn-secondary:hover {
+    background: rgba(214,40,40,0.2);
+    border-color: var(--rojo);
+    color: var(--rojo);
+    transform: translateY(-2px);
+  }
 
   .hero-stats {
     display: flex;
-    gap: 40px;
+    gap: 48px;
     justify-content: center;
-    margin-top: 48px;
-    padding-top: 32px;
-    border-top: 1px solid #222;
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 2px solid rgba(214,40,40,0.3);
+    flex-wrap: wrap;
   }
 
-  .stat { text-align: center; }
+  .stat {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(214,40,40,0.2);
+    min-width: 120px;
+  }
+
   .stat-num {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 36px;
-    font-weight: 800;
+    font-size: 42px;
+    font-weight: 900;
     color: var(--rojo);
     line-height: 1;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 10px rgba(214,40,40,0.5);
   }
-  .stat-label { font-size: 12px; color: var(--texto-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
 
+  .stat-label {
+    font-size: 13px;
+    color: #ccc;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+
+  
   /* ===== CATEGORÍAS ===== */
   .section {
     max-width: 1280px;
     margin: 0 auto;
     padding: 60px 24px;
+    position: relative;
+  }
+
+  .section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100px;
+    right: -100px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rojo), transparent);
+    opacity: 0.3;
+  }
+
+  /* Fondo para secciones alternas */
+  .section:nth-child(even) {
+    background: linear-gradient(135deg, rgba(26,26,26,0.5) 0%, rgba(44,44,44,0.3) 100%);
+    border-radius: 20px;
+    margin: 40px auto;
   }
 
   .section-title {
@@ -367,7 +520,15 @@
     transform: translateY(-3px);
   }
 
-  .cat-icon { font-size: 36px; margin-bottom: 10px; }
+  .cat-icon { 
+    font-size: 36px; 
+    margin-bottom: 10px;
+    transition: all 0.3s;
+  }
+  .cat-card:hover .cat-icon {
+    transform: scale(1.2) rotate(10deg);
+    filter: drop-shadow(0 0 10px rgba(214,40,40,0.5));
+  }
   .cat-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
   .cat-count { font-size: 12px; color: var(--texto-muted); }
 
@@ -380,12 +541,13 @@
   }
 
   .product-card {
-    background: var(--gris-oscuro);
-    border: 1px solid #2a2a2a;
+    background: white;
+    border: 1px solid #e0e0e0;
     border-radius: 12px;
     overflow: hidden;
     transition: all 0.25s;
     cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   }
 
   .product-card:hover {
@@ -396,12 +558,23 @@
 
   .product-img {
     height: 180px;
-    background: var(--gris-medio);
+    background: linear-gradient(135deg, var(--gris-medio), rgba(214,40,40,0.1));
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 64px;
     position: relative;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .product-img::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(214,40,40,0.2)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+    opacity: 0.3;
   }
 
   .product-badge {
@@ -420,8 +593,8 @@
 
   .product-body { padding: 16px; }
   .product-cat { font-size: 11px; color: var(--rojo); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
-  .product-name { font-weight: 600; font-size: 15px; margin-bottom: 6px; line-height: 1.3; }
-  .product-compat { font-size: 12px; color: var(--texto-muted); margin-bottom: 12px; }
+  .product-name { font-weight: 600; font-size: 15px; margin-bottom: 6px; line-height: 1.3; color: #333; }
+  .product-compat { font-size: 12px; color: #666; margin-bottom: 12px; }
 
   .product-footer {
     display: flex;
@@ -429,7 +602,7 @@
     justify-content: space-between;
     margin-top: 12px;
     padding-top: 12px;
-    border-top: 1px solid #333;
+    border-top: 1px solid #e0e0e0;
   }
 
   .product-price { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; color: var(--amarillo); }
@@ -474,6 +647,26 @@
     border-radius: 12px;
     padding: 20px;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pago-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(214,40,40,0.1), transparent);
+    transform: rotate(45deg);
+    transition: all 0.5s;
+    opacity: 0;
+  }
+
+  .pago-card:hover::before {
+    opacity: 1;
+    transform: rotate(45deg) translate(50%, 50%);
   }
 
   .pago-icon { font-size: 32px; margin-bottom: 10px; }
@@ -1013,6 +1206,196 @@
     .cart-panel { width: 100vw; }
   }
 
+  /* ===== ANIMACIONES PROFESIONALES ===== */
+  
+  /* Animaciones de entrada */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+  
+  @keyframes slideInFromTop {
+    from {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes glow {
+    0%, 100% {
+      box-shadow: 0 0 5px rgba(214,40,40,0.5);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(214,40,40,0.8), 0 0 30px rgba(214,40,40,0.4);
+    }
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Clases de animación */
+  .animate-fadeInUp {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+  
+  .animate-fadeInLeft {
+    animation: fadeInLeft 0.8s ease-out forwards;
+  }
+  
+  .animate-fadeInRight {
+    animation: fadeInRight 0.8s ease-out forwards;
+  }
+  
+  .animate-pulse {
+    animation: pulse 2s infinite;
+  }
+  
+  .animate-glow {
+    animation: glow 2s infinite;
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .animate-rotate {
+    animation: rotate 20s linear infinite;
+  }
+  
+  /* Animaciones para elementos específicos */
+  .hero-content {
+    animation: fadeInUp 1s ease-out;
+  }
+  
+  .cat-card {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+  
+  .cat-card:nth-child(1) { animation-delay: 0.1s; }
+  .cat-card:nth-child(2) { animation-delay: 0.2s; }
+  .cat-card:nth-child(3) { animation-delay: 0.3s; }
+  .cat-card:nth-child(4) { animation-delay: 0.4s; }
+  .cat-card:nth-child(5) { animation-delay: 0.5s; }
+  .cat-card:nth-child(6) { animation-delay: 0.6s; }
+  
+  .product-card {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+  
+  .product-card:nth-child(1) { animation-delay: 0.1s; }
+  .product-card:nth-child(2) { animation-delay: 0.2s; }
+  .product-card:nth-child(3) { animation-delay: 0.3s; }
+  .product-card:nth-child(4) { animation-delay: 0.4s; }
+  .product-card:nth-child(5) { animation-delay: 0.5s; }
+  .product-card:nth-child(6) { animation-delay: 0.6s; }
+  .product-card:nth-child(7) { animation-delay: 0.7s; }
+  .product-card:nth-child(8) { animation-delay: 0.8s; }
+  
+  .pago-card {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+  
+  .pago-card:nth-child(1) { animation-delay: 0.2s; }
+  .pago-card:nth-child(2) { animation-delay: 0.4s; }
+  .pago-card:nth-child(3) { animation-delay: 0.6s; }
+  .pago-card:nth-child(4) { animation-delay: 0.8s; }
+  
+  /* Animaciones hover mejoradas */
+  .cat-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(214,40,40,0.3);
+  }
+  
+  .product-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(214,40,40,0.25);
+  }
+  
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(214,40,40,0.4);
+  }
+  
+  .btn-header:hover {
+    transform: translateY(-2px);
+  }
+  
+  .logo:hover .logo-icon {
+    animation: rotate 0.5s ease-in-out;
+  }
+  
+  /* Animaciones para el hero */
+  .hero-badge {
+    animation: pulse 2s infinite;
+  }
+  
+  .hero h1 span {
+    background: linear-gradient(45deg, var(--rojo), #ff6b6b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: glow 3s infinite;
+  }
+  
   /* Scrollbar */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: #111; }
@@ -1024,14 +1407,16 @@
 
 <!-- TOPBAR -->
 <div class="topbar">
-  🚚 Envíos a todo el Perú · Pago por Yape, Plin, Transferencia · 📞 WhatsApp: +51 987 654 321
+  🚚 Envíos a todo el Perú · Pago por Yape, Plin, Transferencia · 📞 WhatsApp: +51 924 205 042
 </div>
 
 <!-- HEADER -->
 <header>
   <div class="header-inner">
     <a class="logo" href="#" onclick="showSection('home')">
-      <div class="logo-icon">🔧</div>
+      <div class="logo-icon">
+        <img src="logo.jfif" alt="Repuestos Elva" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+      </div>
       <div class="logo-text">
         <span>Repuestos</span>
         <span>Elva</span>
@@ -1088,8 +1473,8 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
-      <div class="hero-badge">⚡ Tu tienda de repuestos online</div>
-      <h1>Repuestos<br><span>Elva</span><br>Online</h1>
+      <div class="hero-badge">⚡ Tu tienda de repuestos</div>
+      <h1>Repuestos<br><span>Elva</span></h1>
       <p>Encuentra los mejores repuestos para tu vehículo. Calidad garantizada, envíos a todo el Perú y pagos sin comisiones.</p>
       <div class="hero-btns">
         <button class="btn-primary" onclick="showSection('catalogo')">Ver catálogo</button>
@@ -1205,26 +1590,84 @@
 
 <!-- SECCIÓN NOSOTROS -->
 <div id="section-nosotros" style="display:none">
-  <div class="section" style="max-width:800px">
+  <div class="section" style="max-width:1000px">
     <div class="section-title">Sobre <span>Nosotros</span></div>
-    <div style="margin-top:32px; color:#ccc; line-height:1.8; font-size:15px;">
-      <p style="margin-bottom:20px"><strong style="color:white">Auto Respuestos Elva</strong> es una empresa dedicada a la venta de repuestos y accesorios automotrices, enfocada en atender las necesidades de talleres mecánicos y vehículos particulares en todo el Perú.</p>
-      <p style="margin-bottom:20px">Ante el creciente interés por las compras en línea, hemos expandido nuestro alcance a través de esta plataforma de e-commerce, facilitando la adquisición de productos para nuestros clientes de manera cómoda y accesible.</p>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:32px;">
-        <div style="background:var(--gris-oscuro);border:1px solid #2a2a2a;border-radius:12px;padding:24px;text-align:center">
-          <div style="font-size:36px;margin-bottom:8px">🎯</div>
-          <div style="font-weight:700;margin-bottom:6px">Misión</div>
-          <div style="font-size:13px;color:var(--texto-muted)">Proveer repuestos de calidad a precios justos</div>
+    <div class="section-sub">Conoce la historia y el compromiso detrás de Repuestos Elva</div>
+    
+    <div style="margin-top:48px; color:#ccc; line-height:1.8; font-size:15px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-bottom:48px">
+        <div>
+          <h3 style="color:white;font-size:24px;margin-bottom:16px;font-family:'Barlow Condensed',sans-serif">Nuestra Historia</h3>
+          <p style="margin-bottom:20px"><strong style="color:white">Repuestos Elva</strong> nació en 2018 en Abancay, Apurímac, con la visión de revolucionar el mercado de repuestos automotrices en el Perú. Empezamos como un pequeño taller familiar y hoy somos una de las plataformas e-commerce más confiables del sur del país.</p>
+          <p style="margin-bottom:20px">Con más de 5 años de experiencia, hemos servido a miles de clientes en todo el Perú, desde talleres mecánicos hasta conductores particulares que buscan calidad y confianza en cada compra.</p>
         </div>
-        <div style="background:var(--gris-oscuro);border:1px solid #2a2a2a;border-radius:12px;padding:24px;text-align:center">
-          <div style="font-size:36px;margin-bottom:8px">🔭</div>
-          <div style="font-weight:700;margin-bottom:6px">Visión</div>
-          <div style="font-size:13px;color:var(--texto-muted)">Ser el e-commerce #1 de repuestos en Perú</div>
+        <div style="background:var(--gris-oscuro);border:1px solid #2a2a2a;border-radius:16px;padding:32px;text-align:center">
+          <div style="font-size:64px;margin-bottom:16px">🚗</div>
+          <div style="font-size:24px;font-weight:700;color:var(--rojo);margin-bottom:8px">5+ Años</div>
+          <div style="font-size:14px;color:var(--texto-muted)">De experiencia en el mercado automotriz</div>
         </div>
-        <div style="background:var(--gris-oscuro);border:1px solid #2a2a2a;border-radius:12px;padding:24px;text-align:center">
-          <div style="font-size:36px;margin-bottom:8px">💎</div>
-          <div style="font-weight:700;margin-bottom:6px">Valores</div>
-          <div style="font-size:13px;color:var(--texto-muted)">Calidad, honestidad y compromiso</div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;margin-top:48px;">
+        <div style="background:linear-gradient(135deg,var(--gris-oscuro),var(--gris-medio));border:1px solid #2a2a2a;border-radius:16px;padding:28px;text-align:center;position:relative;overflow:hidden">
+          <div style="position:absolute;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg,var(--rojo),#ff6b6b)"></div>
+          <div style="font-size:42px;margin-bottom:12px">🎯</div>
+          <div style="font-weight:700;margin-bottom:8px;color:white;font-size:18px">Misión</div>
+          <div style="font-size:14px;color:var(--texto-muted);line-height:1.6">Satisfacer las necesidades de nuestros clientes mediante la venta de repuestos automotrices de calidad, con precios accesibles y un servicio rápido y confiable</div>
+        </div>
+        <div style="background:linear-gradient(135deg,var(--gris-oscuro),var(--gris-medio));border:1px solid #2a2a2a;border-radius:16px;padding:28px;text-align:center;position:relative;overflow:hidden">
+          <div style="position:absolute;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg,var(--rojo),#ff6b6b)"></div>
+          <div style="font-size:42px;margin-bottom:12px">🔭</div>
+          <div style="font-weight:700;margin-bottom:8px;color:white;font-size:18px">Visión</div>
+          <div style="font-size:14px;color:var(--texto-muted);line-height:1.6">Ser la plataforma líder de repuestos automotrices en Perú, innovando constantemente en servicio y tecnología</div>
+        </div>
+        <div style="background:linear-gradient(135deg,var(--gris-oscuro),var(--gris-medio));border:1px solid #2a2a2a;border-radius:16px;padding:28px;text-align:center;position:relative;overflow:hidden">
+          <div style="position:absolute;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg,var(--rojo),#ff6b6b)"></div>
+          <div style="font-size:42px;margin-bottom:12px">💎</div>
+          <div style="font-weight:700;margin-bottom:8px;color:white;font-size:18px">Valores</div>
+          <div style="font-size:14px;color:var(--texto-muted);line-height:1.6">Calidad, honestidad, compromiso y innovación en cada producto y servicio que ofrecemos</div>
+        </div>
+      </div>
+
+      <div style="margin-top:48px">
+        <h3 style="color:white;font-size:24px;margin-bottom:24px;font-family:'Barlow Condensed',sans-serif;text-align:center">Nuestras Ventajas Competitivas</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px">
+          <div style="display:flex;align-items:center;gap:16px;background:var(--gris-oscuro);border:1px solid #2a2a2a;border-radius:12px;padding:20px">
+            <div style="font-size:32px;color:var(--rojo)">✅</div>
+            <div>
+              <div style="font-weight:700;color:white;margin-bottom:4px">Garantía de Calidad</div>
+              <div style="font-size:13px;color:var(--texto-muted)">Todos nuestros productos cuentan con garantía oficial</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;background:var(--gris-oscuro);border:1px solid #2a2a2a;border-radius:12px;padding:20px">
+            <div style="font-size:32px;color:var(--rojo)">🚀</div>
+            <div>
+              <div style="font-weight:700;color:white;margin-bottom:4px">Envíos Rápidos</div>
+              <div style="font-size:13px;color:var(--texto-muted)">Entrega en 24h a todo el Perú</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;background:var(--gris-oscuro);border:1px solid #2a2a2a;border-radius:12px;padding:20px">
+            <div style="font-size:32px;color:var(--rojo)">💰</div>
+            <div>
+              <div style="font-weight:700;color:white;margin-bottom:4px">Mejores Precios</div>
+              <div style="font-size:13px;color:var(--texto-muted)">Competitividad garantizada en el mercado</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;background:var(--gris-oscuro);border:1px solid #2a2a2a;border-radius:12px;padding:20px">
+            <div style="font-size:32px;color:var(--rojo)">🎓</div>
+            <div>
+              <div style="font-weight:700;color:white;margin-bottom:4px">Asesoría Técnica</div>
+              <div style="font-size:13px;color:var(--texto-muted)">Expertos a tu disposición</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:48px;text-align:center">
+        <div style="background:linear-gradient(135deg,rgba(214,40,40,0.1),rgba(214,40,40,0.05));border:2px solid rgba(214,40,40,0.3);border-radius:16px;padding:32px">
+          <h3 style="color:var(--rojo);font-size:28px;margin-bottom:16px;font-family:'Barlow Condensed',sans-serif">¿Listo para trabajar con nosotros?</h3>
+          <p style="font-size:16px;color:#ccc;margin-bottom:24px">Únete a miles de clientes que confían en Repuestos Elva</p>
+          <button class="btn-primary" onclick="showSection('contacto')">Contactar Ahora</button>
         </div>
       </div>
     </div>
@@ -1239,12 +1682,12 @@
       <div style="background:var(--gris-oscuro);border:1px solid #2a2a2a;border-radius:12px;padding:20px;text-align:center">
         <div style="font-size:28px;margin-bottom:8px">📱</div>
         <div style="font-weight:700;margin-bottom:4px">WhatsApp</div>
-        <div style="color:var(--texto-muted);font-size:13px">+51 987 654 321</div>
+        <div style="color:var(--texto-muted);font-size:13px">+51 924 205 042</div>
       </div>
       <div style="background:var(--gris-oscuro);border:1px solid #2a2a2a;border-radius:12px;padding:20px;text-align:center">
         <div style="font-size:28px;margin-bottom:8px">📧</div>
         <div style="font-weight:700;margin-bottom:4px">Email</div>
-        <div style="color:var(--texto-muted);font-size:13px">ventas@autorepuestospro.pe</div>
+        <div style="color:var(--texto-muted);font-size:13px">repuestos_elva@gmail.com</div>
       </div>
       <div style="background:var(--gris-oscuro);border:1px solid #2a2a2a;border-radius:12px;padding:20px;text-align:center">
         <div style="font-size:28px;margin-bottom:8px">📍</div>
@@ -1284,7 +1727,7 @@
       <div style="background:var(--gris-oscuro);border:1px solid #2a2a2a;border-radius:12px;padding:24px;margin-top:24px">
         <div class="form-group"><label>Nombre completo</label><input type="text" placeholder="Tu nombre"></div>
         <div class="form-group"><label>Email</label><input type="email" placeholder="tu@email.com"></div>
-        <div class="form-group"><label>Teléfono</label><input type="tel" placeholder="+51 987 654 321"></div>
+        <div class="form-group"><label>Teléfono</label><input type="tel" placeholder="924 205 042"></div>
         <div class="form-group"><label>Contraseña</label><input type="password" placeholder="Mínimo 8 caracteres"></div>
         <button class="btn-primary" style="width:100%;margin-bottom:12px" onclick="alert('¡Cuenta creada exitosamente!')">Registrarse</button>
         <button class="btn-secondary" style="width:100%" onclick="document.getElementById('registerForm').style.display='none';document.getElementById('loginForm').style.display='block'">Ya tengo cuenta</button>
@@ -1298,13 +1741,15 @@
   <div class="footer-inner">
     <div class="footer-brand">
       <div class="logo">
-        <div class="logo-icon">🔧</div>
+        <div class="logo-icon">
+          <img src="logo.jfif" alt="Repuestos Elva" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+        </div>
         <div class="logo-text">
-          <span>AutoRepuestos</span>
-          <span>PRO</span>
+          <span>Repuestos</span>
+          <span>Elva</span>
         </div>
       </div>
-      <p>Tu tienda de repuestos automotrices online. Calidad garantizada y envíos a todo el Perú. Sin comisiones en tus pagos.</p>
+      <p>Tu tienda de repuestos automotrices. Calidad garantizada y envíos a todo el Perú. Sin comisiones en tus pagos.</p>
     </div>
     <div class="footer-col">
       <h4>Categorías</h4>
@@ -1324,8 +1769,8 @@
     </div>
     <div class="footer-col">
       <h4>Contacto</h4>
-      <a href="#">📱 +51 987 654 321</a>
-      <a href="#">📧 ventas@autorepuestospro.pe</a>
+      <a href="#">📱 +51 924 205 042</a>
+      <a href="#">📧 repuestos_elva@gmail.com</a>
       <a href="#">📍 Abancay, Apurímac</a>
       <a href="#">⏰ Lun–Sáb: 8am–6pm</a>
     </div>
@@ -1379,7 +1824,7 @@
     </div>
     <div class="form-group"><label>Nombre completo</label><input type="text" id="checkName" placeholder="Tu nombre completo"></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-      <div class="form-group"><label>Teléfono / WhatsApp</label><input type="tel" id="checkPhone" placeholder="+51 987 654 321"></div>
+      <div class="form-group"><label>Teléfono / WhatsApp</label><input type="tel" id="checkPhone" placeholder="924 205 042"></div>
       <div class="form-group"><label>Email</label><input type="email" id="checkEmail" placeholder="tu@email.com"></div>
     </div>
     <div class="form-group"><label>Dirección de entrega</label><input type="text" id="checkAddr" placeholder="Calle, número, distrito, ciudad"></div>
@@ -1417,18 +1862,18 @@
 <script>
 // ===== PRODUCTOS =====
 const products = [
-  { id:1, name:'Filtro de Aceite Bosch 3330', cat:'motor', price:45.90, oldPrice:55.00, icon:'🔧', compat:'Toyota, Kia, Hyundai', badge:'Más vendido', desc:'Filtro de aceite de alta calidad para motores de hasta 2.0L. Compatible con múltiples marcas asiáticas.', specs:{Marca:'Bosch',Modelo:'3330',Tipo:'Filtro de aceite',Peso:'0.3 kg',Garantía:'6 meses'} },
-  { id:2, name:'Pastillas de Freno Cerámicas', cat:'frenos', price:125.90, oldPrice:150.00, icon:'🛑', compat:'Nissan Frontier, Patrol', badge:'Oferta', desc:'Pastillas de freno de material cerámico de alta durabilidad. Reducen el polvo y el ruido durante el frenado.', specs:{Marca:'TRW',Tipo:'Cerámicas',Posición:'Delantera',Garantía:'12 meses',Origen:'Importado'} },
-  { id:3, name:'Batería 12V 60Ah Yuasa', cat:'electrico', price:289.90, oldPrice:320.00, icon:'🔋', compat:'Autos y camionetas 1.6-2.5L', badge:'Premium', desc:'Batería de alta potencia con tecnología libre de mantenimiento. Arranque confiable en cualquier clima.', specs:{Marca:'Yuasa',Voltaje:'12V',Capacidad:'60Ah',Polaridad:'Izquierda',Garantía:'18 meses'} },
-  { id:4, name:'Amortiguadores Delanteros KYB', cat:'suspension', price:189.90, oldPrice:220.00, icon:'⬆️', compat:'Toyota Hilux 2015-2022', badge:'Nuevo', desc:'Amortiguadores de gas de alto rendimiento para terrenos irregulares. Par delantero incluye dos unidades.', specs:{Marca:'KYB',Tipo:'Gas',Posición:'Delantero',Pack:'2 unidades',Garantía:'12 meses'} },
-  { id:5, name:'Correa de Distribución Gates', cat:'motor', price:95.00, oldPrice:110.00, icon:'⚙️', compat:'Chevrolet Spark, Aveo', badge:null, desc:'Correa de distribución de alta resistencia con material reforzado. Larga vida útil y instalación sencilla.', specs:{Marca:'Gates',Material:'HNBR',Dientes:'122',Ancho:'25mm',Garantía:'24 meses'} },
-  { id:6, name:'Kit de Embrague Completo', cat:'transmision', price:450.00, oldPrice:520.00, icon:'🔩', compat:'Hyundai Accent, i10, i20', badge:'Kit completo', desc:'Kit completo de embrague incluye disco, plato de presión y cojinete de empuje. Todo lo necesario para el cambio.', specs:{Marca:'Valeo',Diámetro:'215mm',Incluye:'Disco + Plato + Cojinete',Garantía:'12 meses',Origen:'Francia'} },
-  { id:7, name:'Sensor de Oxígeno Bosch', cat:'electrico', price:85.00, oldPrice:100.00, icon:'📡', compat:'Varios modelos universales', badge:null, desc:'Sensor lambda de banda estrecha para control de mezcla aire/combustible. Mejora el rendimiento y reduce emisiones.', specs:{Marca:'Bosch',Tipo:'Banda estrecha',Conector:'4 pines',Longitud:'60cm',Garantía:'12 meses'} },
-  { id:8, name:'Disco de Freno Ventilado', cat:'frenos', price:165.00, oldPrice:190.00, icon:'🔵', compat:'Ford Ranger 4x4 2018-2023', badge:'Oferta', desc:'Disco de freno ventilado de alta disipación de calor. Mejora el poder de frenado y reduce el fade en uso intensivo.', specs:{Marca:'Brembo',Diámetro:'280mm',Tipo:'Ventilado',Espesor:'28mm',Garantía:'12 meses'} },
-  { id:9, name:'Juego de Bujías NGK (4 pcs)', cat:'motor', price:65.00, oldPrice:80.00, icon:'⚡', compat:'Motores 1.3 - 1.8L gasolina', badge:null, desc:'Bujías de iridio de alto rendimiento para mejor encendido y mayor duración. Pack de 4 unidades.', specs:{Marca:'NGK',Tipo:'Iridio',Gap:'1.1mm',Pack:'4 unidades',Garantía:'12 meses'} },
-  { id:10, name:'Llave de Torque 20-210 Nm', cat:'herramientas', price:145.00, oldPrice:170.00, icon:'🔧', compat:'Uso universal en taller', badge:'Recomendado', desc:'Llave de torque de alta precisión con escala doble. Incluye estuche para almacenamiento y extensiones.', specs:{Marca:'Gedore',Rango:'20-210 Nm',Precisión:'±4%',Incluye:'Estuche + extensiones',Garantía:'24 meses'} },
-  { id:11, name:'Filtro de Aire Sport Racing', cat:'motor', price:55.00, oldPrice:68.00, icon:'🌀', compat:'Universal admisión 70-80mm', badge:null, desc:'Filtro de aire de alto flujo para mayor rendimiento. Lavable y reutilizable, diseño cónico universal.', specs:{Marca:'K&N',Tipo:'Cónico alto flujo',Diámetro:'80mm',Lavable:'Sí',Garantía:'Lifetime'} },
-  { id:12, name:'Terminal de Dirección Izq.', cat:'suspension', price:78.00, oldPrice:92.00, icon:'🎛️', compat:'Nissan Sentra 2013-2019', badge:null, desc:'Terminal de dirección de precisión con pin y bola de acero endurecido. Instalación directa sin modificaciones.', specs:{Marca:'Moog',Posición:'Izquierda',Material:'Acero endurecido',Incluye:'Tuerca y pasador',Garantía:'12 meses'} },
+  { id:1, name:'Filtro de Aceite Bosch 3330', cat:'motor', price:45.90, oldPrice:55.00, icon:'🔧', image:'https://i.ebayimg.com/images/g/vxoAAeSwwelp5lhp/s-l1200.webp', compat:'Toyota, Kia, Hyundai', badge:'Más vendido', desc:'Filtro de aceite de alta calidad para motores de hasta 2.0L. Compatible con múltiples marcas asiáticas.', specs:{Marca:'Bosch',Modelo:'3330',Tipo:'Filtro de aceite',Peso:'0.3 kg',Garantía:'6 meses'} },
+  { id:2, name:'Pastillas de Freno Cerámicas', cat:'frenos', price:125.90, oldPrice:150.00, icon:'🛑', image:'https://www.allracingperu.pe/cdn/shop/products/5000-advanced-ceramic-disc-brake-pads_1_533x.jpg', compat:'Nissan Frontier, Patrol', badge:'Oferta', desc:'Pastillas de freno de material cerámico de alta durabilidad. Reducen el polvo y el ruido durante el frenado.', specs:{Marca:'TRW',Tipo:'Cerámicas',Posición:'Delantera',Garantía:'12 meses',Origen:'Importado'} },
+  { id:3, name:'Batería 12V 60Ah Yuasa', cat:'electrico', price:289.90, oldPrice:320.00, icon:'🔋', image:'https://racelight.cl/wp-content/uploads/2024/11/bateria-yuasa-65d23l-60ah-490cca-smf.jpg', compat:'Autos y camionetas 1.6-2.5L', badge:'Premium', desc:'Batería de alta potencia con tecnología libre de mantenimiento. Arranque confiable en cualquier clima.', specs:{Marca:'Yuasa',Voltaje:'12V',Capacidad:'60Ah',Polaridad:'Izquierda',Garantía:'18 meses'} },
+  { id:4, name:'Amortiguadores Delanteros KYB', cat:'suspension', price:189.90, oldPrice:220.00, icon:'⬆️', image:'https://m.media-amazon.com/images/I/61m9W+e-a3L.jpg', compat:'Toyota Hilux 2015-2022', badge:'Nuevo', desc:'Amortiguadores de gas de alto rendimiento para terrenos irregulares. Par delantero incluye dos unidades.', specs:{Marca:'KYB',Tipo:'Gas',Posición:'Delantero',Pack:'2 unidades',Garantía:'12 meses'} },
+  { id:5, name:'Correa de Distribución Gates', cat:'motor', price:95.00, oldPrice:110.00, icon:'⚙️', image:'https://goracingchile.com/cdn/shop/products/gates_grande.jpg', compat:'Chevrolet Spark, Aveo', badge:null, desc:'Correa de distribución de alta resistencia con material reforzado. Larga vida útil y instalación sencilla.', specs:{Marca:'Gates',Material:'HNBR',Dientes:'122',Ancho:'25mm',Garantía:'24 meses'} },
+  { id:6, name:'Kit de Embrague Completo', cat:'transmision', price:450.00, oldPrice:520.00, icon:'🔩', image:'https://fraemma.com/wp-content/uploads/2019/03/1197-KIT-EMBRAGUE-H3H4LN105LN130LH80LY61LJ7-90.jpg', compat:'Hyundai Accent, i10, i20', badge:'Kit completo', desc:'Kit completo de embrague incluye disco, plato de presión y cojinete de empuje. Todo lo necesario para el cambio.', specs:{Marca:'Valeo',Diámetro:'215mm',Incluye:'Disco + Plato + Cojinete',Garantía:'12 meses',Origen:'Francia'} },
+  { id:7, name:'Sensor de Oxígeno Bosch', cat:'electrico', price:85.00, oldPrice:100.00, icon:'📡', image:'https://www.aibitech.com/89448-large_default/sensor-de-oxigeno-sonda-lambda-universal-4-cables-7w-variable-switching-069m-bosch-0258986602.jpg', compat:'Varios modelos universales', badge:null, desc:'Sensor lambda de banda estrecha para control de mezcla aire/combustible. Mejora el rendimiento y reduce emisiones.', specs:{Marca:'Bosch',Tipo:'Banda estrecha',Conector:'4 pines',Longitud:'60cm',Garantía:'12 meses'} },
+  { id:8, name:'Disco de Freno Ventilado', cat:'frenos', price:165.00, oldPrice:190.00, icon:'🔵', image:'https://cdn.club-magazin.autodoc.de/uploads/sites/11/2020/12/discos-de-freno-diferencias-y-funciones.jpg', compat:'Ford Ranger 4x4 2018-2023', badge:'Oferta', desc:'Disco de freno ventilado de alta disipación de calor. Mejora el poder de frenado y reduce el fade en uso intensivo.', specs:{Marca:'Brembo',Diámetro:'280mm',Tipo:'Ventilado',Espesor:'28mm',Garantía:'12 meses'} },
+  { id:9, name:'Juego de Bujías NGK (4 pcs)', cat:'motor', price:65.00, oldPrice:80.00, icon:'⚡', image:'https://http2.mlstatic.com/D_NQ_NP_918459-MPE76961221996_062024-O.webp', compat:'Motores 1.3 - 1.8L gasolina', badge:null, desc:'Bujías de iridio de alto rendimiento para mejor encendido y mayor duración. Pack de 4 unidades.', specs:{Marca:'NGK',Tipo:'Iridio',Gap:'1.1mm',Pack:'4 unidades',Garantía:'12 meses'} },
+  { id:10, name:'Llave de Torque 20-210 Nm', cat:'herramientas', price:145.00, oldPrice:170.00, icon:'🔧', image:'https://http2.mlstatic.com/D_Q_NP_930962-MLA100079703541_122025-O.webp', compat:'Uso universal en taller', badge:'Recomendado', desc:'Llave de torque de alta precisión con escala doble. Incluye estuche para almacenamiento y extensiones.', specs:{Marca:'Gedore',Rango:'20-210 Nm',Precisión:'±4%',Incluye:'Estuche + extensiones',Garantía:'24 meses'} },
+  { id:11, name:'Filtro de Aire Sport Racing', cat:'motor', price:55.00, oldPrice:68.00, icon:'🌀', image:'https://http2.mlstatic.com/D_NQ_NP_821468-MLA78043337532_082024-O.webp', compat:'Universal admisión 70-80mm', badge:null, desc:'Filtro de aire de alto flujo para mayor rendimiento. Lavable y reutilizable, diseño cónico universal.', specs:{Marca:'K&N',Tipo:'Cónico alto flujo',Diámetro:'80mm',Lavable:'Sí',Garantía:'Lifetime'} },
+  { id:12, name:'Terminal de Dirección Izq.', cat:'suspension', price:78.00, oldPrice:92.00, icon:'🎛️', image:'https://images.unsplash.com/photo-1555212697-194d092e3b8f?w=400&h=300&fit=crop&auto=format', compat:'Nissan Sentra 2013-2019', badge:null, desc:'Terminal de dirección de precisión con pin y bola de acero endurecido. Instalación directa sin modificaciones.', specs:{Marca:'Moog',Posición:'Izquierda',Material:'Acero endurecido',Incluye:'Tuerca y pasador',Garantía:'12 meses'} },
 ];
 
 let cart = [];
@@ -1443,9 +1888,8 @@ function renderProducts(list, containerId) {
   }
   container.innerHTML = list.map(p => `
     <div class="product-card" onclick="openProduct(${p.id})">
-      <div class="product-img">
+      <div class="product-img" style="background-image:url('${p.image}');background-size:cover;background-position:center;">
         ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
-        ${p.icon}
       </div>
       <div class="product-body">
         <div class="product-cat">${getCatName(p.cat)}</div>
@@ -1572,7 +2016,7 @@ function openProduct(id) {
   modal.innerHTML = `
     <div style="position:relative">
       <button class="btn-close" style="position:absolute;top:16px;right:16px;z-index:1;background:rgba(0,0,0,0.5);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center" onclick="document.getElementById('productModal').classList.remove('open')">✕</button>
-      <div class="modal-img">${p.icon}</div>
+      <div class="modal-img" style="background-image:url('${p.image}');background-size:cover;background-position:center;"></div>
     </div>
     <div class="modal-body">
       <div class="modal-cat">${getCatName(p.cat)}</div>
@@ -1586,7 +2030,7 @@ function openProduct(id) {
       <div style="font-size:13px;color:#aaa;margin-bottom:16px">🚗 Compatible con: ${p.compat}</div>
       <div class="modal-actions">
         <button class="btn-add-big" onclick="addToCart(${p.id});document.getElementById('productModal').classList.remove('open')">🛒 Agregar al carrito</button>
-        <button class="btn-whatsapp" onclick="window.open('https://wa.me/51987654321?text=Hola,%20me%20interesa:%20${encodeURIComponent(p.name)}')">WhatsApp</button>
+        <button class="btn-whatsapp" onclick="window.open('https://wa.me/51924205042?text=Hola,%20me%20interesa:%20${encodeURIComponent(p.name)}')">WhatsApp</button>
       </div>
     </div>
   `;
