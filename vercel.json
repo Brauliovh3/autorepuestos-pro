@@ -1,30 +1,10 @@
 {
   "version": 2,
   "name": "repuestos-elva",
-  "builds": [
-    {
-      "src": "index.html",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/favicon.jfif",
-      "dest": "/favicon.jfif"
-    },
-    {
-      "src": "/logo.jfif",
-      "dest": "/logo.jfif"
-    },
-    {
-      "src": "/cover.jfif",
-      "dest": "/cover.jfif"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ],
+  "buildCommand": "echo 'Static site - no build needed'",
+  "outputDirectory": ".",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "headers": [
     {
       "source": "/(.*)",
@@ -32,18 +12,6 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
         }
       ]
     },
@@ -55,20 +23,8 @@
           "value": "public, max-age=0, must-revalidate"
         }
       ]
-    },
-    {
-      "source": "/(.*\\.(jfif|jpg|jpeg|png|gif|ico|svg))",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
     }
   ],
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "functions": {},
   "rewrites": [
     {
       "source": "/(.*)",
